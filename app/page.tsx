@@ -1,5 +1,7 @@
 import Image from "next/image";
 import MoodButton from "./component/MoodButton";
+import TracksList from "./component/TracksList";
+
 export default function Home() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
@@ -40,9 +42,8 @@ export default function Home() {
           </audio>
           <div id="status" className="status"></div>
         </section>
-        <section className="playlist">
-          <div className="playlist-title">Joyful playlist</div>
-          <ul id="trackList" className="track-list"></ul>
+        <section className="mt-1">
+          <TracksList mood="joy" />
         </section>
       </main>
     </div>
