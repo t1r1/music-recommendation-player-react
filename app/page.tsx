@@ -3,22 +3,38 @@ import MoodButton from "./component/MoodButton";
 export default function Home() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <h1 className="text-xl">Mood-based Music Player Prototype</h1>
-        <p className=""></p>
-        Select your mood preference:
-        <div className="grid grid-cols-3 gap-4 max-w-md mx-auto p-4">
-          <MoodButton label="Joy" mood="joy" active={false}></MoodButton>
+      <main className="flex min-h-screen w-full max-w-2xl flex-col items-center justify-center py-32 px-16 bg-white dark:bg-black ">
+        <h1 className="text-2xl">EmotiFM</h1>
+        <p className="text-center mt-4"></p>My vibe Set by mood
+        <div className="mt-4 grid grid-cols-3 gap-4 gap-y-5 max-w-md mx-auto">
+          <MoodButton label="Joy" mood="joy" active={true}></MoodButton>
+          <MoodButton label="Happy" mood="happy" active={false}></MoodButton>
+          <MoodButton label="Sad" mood="sad" active={false}></MoodButton>
+          <MoodButton
+            label="Inspired"
+            mood="inspired"
+            active={false}
+          ></MoodButton>
+          <MoodButton label="Loving" mood="loving" active={false}></MoodButton>
+          <MoodButton
+            label="Sentimental"
+            mood="sentimental"
+            active={false}
+          ></MoodButton>
+          <MoodButton
+            label="Relaxed"
+            mood="relaxed"
+            active={false}
+          ></MoodButton>
+          <MoodButton label="Tense" mood="tense" active={false}></MoodButton>
+          <MoodButton label="Strong" mood="strong" active={false}></MoodButton>
         </div>
         {/* <FontAwesomeIcon icon={faHeart} className="text-2xl text-red-500" /> */}
-        <p className="options">And other options soon...</p>
-        <section className="player-section">
-          <div id="currentTrack" className="current-track">
+        <section className="mt-5">
+          <div id="currentTrack" className="">
             No track selected yet.
           </div>
-          <button>
-            <img src="back.png" width="40" height="40" />
-          </button>
+
           <audio id="audioPlayer" controls preload="none">
             Your browser does not support the audio element.
           </audio>
