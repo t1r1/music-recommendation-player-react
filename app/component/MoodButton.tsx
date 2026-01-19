@@ -15,9 +15,10 @@ type Props = {
     | "sentimental"
     | "loving";
   active?: boolean;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 };
 
-export default function MoodButton({ label, mood, active }: Props) {
+export default function MoodButton({ label, mood, active, onClick }: Props) {
   const gradients = {
     happy: "from-amber-300 via-amber-500 to-amber-700",
     sad: "from-slate-300 via-slate-400 to-blue-400",
@@ -32,6 +33,7 @@ export default function MoodButton({ label, mood, active }: Props) {
 
   return (
     <button
+      onClick={onClick}
       id={label.toLowerCase()}
       className={`
         hover:brightness-95 hover:-translate-y-0.5 hover:shadow-md
