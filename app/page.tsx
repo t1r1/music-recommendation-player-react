@@ -6,6 +6,7 @@ import TracksList from "./component/TracksList";
 import { useMood } from "@/context/MoodContext";
 export default function Home() {
   const { moodMaps, currentMood, setCurrentMood } = useMood();
+
   const isActive = (mood: string) => {
     return mood === currentMood;
   };
