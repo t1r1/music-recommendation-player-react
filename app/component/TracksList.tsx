@@ -24,7 +24,6 @@ export default function TracksList({
   const [tracks, setTracks] = useState<TrackData[]>([]);
   const [loading, setLoading] = useState(true);
 
-  console.log("currentTrack in Tracklist:", currentTrack);
   // get selected mood + mood configs from context
   const { currentMood, moodMaps } = useMood();
 

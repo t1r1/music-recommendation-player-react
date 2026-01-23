@@ -1,9 +1,10 @@
 "use client";
-import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
 import MoodButton from "./component/MoodButton";
 import TracksList from "./component/TracksList";
+import Player from "./component/Player";
 import { useMood } from "@/context/MoodContext";
+
 export default function Home() {
   const { moodMaps, currentMood, setCurrentMood } = useMood();
   const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
@@ -68,25 +69,8 @@ export default function Home() {
             );
           })}
         </div>
-        {/* <FontAwesomeIcon icon={faHeart} className="text-2xl text-red-500" /> */}
         <section className="mt-5">
-          <div className="flex items-center  mt-4">
-            {currentTrack ? (
-              <div className="overflow-hidden whitespace-nowrap text-ellipsis text-center text-sm max-w-[200px] mr-3">
-                {currentTrack.artist} - {currentTrack.title}
-              </div>
-            ) : (
-              <div className="text-center max-w-[200px] mr-3 text-sm"></div>
-            )}
-            <audio
-              ref={audioRef}
-              controls
-              preload="none"
-              src={currentTrack?.filepath}
-            >
-              Your browser does not support the audio element.
-            </audio>
-          </div>
+          <Player currentTrack={currentTrack} audioRef={audioRef} />
         </section>
         <section className="mt-1">
           <TracksList
