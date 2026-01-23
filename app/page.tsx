@@ -7,6 +7,9 @@ import { useMood } from "@/context/MoodContext";
 export default function Home() {
   const { moodMaps, currentMood, setCurrentMood } = useMood();
   const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
+  const [tracks, setTracks] = useState<TrackData[]>([]);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
   const isActive = (mood: string) => {
     return mood === currentMood;
   };
@@ -18,12 +21,34 @@ export default function Home() {
     audioRef.current.load();
     audioRef.current.play().catch(() => {});
   }, [currentTrack]);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // 🔑 autoplay next track when current finishes
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const handleEnded = () => {
+      if (!currentTrack) return;
+
+      const idx = tracks.findIndex((t) => t.id === currentTrack.id);
+      if (idx === -1) return;
+
+      const nextTrack = tracks[idx + 1];
+      if (nextTrack) {
+        setCurrentTrack(nextTrack);
+      }
+      // loop back to first track
+      else if (tracks.length > 0) {
+        setCurrentTrack(tracks[0]);
+      }
+    };
+
+    audio.addEventListener("ended", handleEnded);
+    return () => audio.removeEventListener("ended", handleEnded);
+  }, [currentTrack, tracks]);
 
   const onPlay = (trackData) => {
-    console.log("current Track: ", trackData);
     setCurrentTrack(trackData);
-    console.log("currentTrack after setting", currentTrack);
   };
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
@@ -68,6 +93,7 @@ export default function Home() {
             mood={currentMood}
             onPlay={onPlay}
             currentTrack={currentTrack}
+            onTracksChange={setTracks}
           />
         </section>
       </main>

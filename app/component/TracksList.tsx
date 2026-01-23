@@ -13,9 +13,14 @@ type TrackData = {
 type TracksListProps = {
   currentTrack: TrackData | null;
   onPlay: (track: TrackData) => void;
+  onTracksChange: (tracks: TrackData[]) => void;
 };
 
-export default function TracksList({ currentTrack, onPlay }: TracksListProps) {
+export default function TracksList({
+  currentTrack,
+  onPlay,
+  onTracksChange,
+}: TracksListProps) {
   const [tracks, setTracks] = useState<TrackData[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -38,6 +43,7 @@ export default function TracksList({ currentTrack, onPlay }: TracksListProps) {
       if (!foundMood) {
         if (!cancelled) {
           setTracks([]);
+          onTracksChange([]);
           setLoading(false);
         }
         return;
@@ -53,9 +59,11 @@ export default function TracksList({ currentTrack, onPlay }: TracksListProps) {
         }
 
         const data = await res.json();
+        const fetchedTracks = data.tracks ?? data;
 
         if (!cancelled) {
-          setTracks(data.tracks ?? data);
+          setTracks(fetchedTracks);
+          onTracksChange(fetchedTracks);
           setLoading(false);
           console.log(data.tracks);
         }
@@ -63,6 +71,7 @@ export default function TracksList({ currentTrack, onPlay }: TracksListProps) {
         if (!cancelled) {
           console.error(err);
           setTracks([]);
+          onTracksChange([]);
           setLoading(false);
         }
       }
@@ -73,7 +82,7 @@ export default function TracksList({ currentTrack, onPlay }: TracksListProps) {
     return () => {
       cancelled = true;
     };
-  }, [currentMood, moodMaps]); // refetch whenever selected mood changes
+  }, [currentMood, moodMaps, onTracksChange]); // refetch whenever selected mood changes
 
   if (loading) return <p className="p-6">loading tracks…</p>;
 
