@@ -46,7 +46,7 @@ export default function Player({
           type="button"
           onClick={onPrev}
           disabled={!hasPrev}
-          className={`px-1 ${!hasPrev ? "opacity-40 cursor-default" : "cursor-pointer"}`}
+          className={`px-1 ${!hasPrev ? "opacity-40 cursor-default" : "hover:bg-amber-100 rounded-md cursor-pointer"}`}
         >
           <FontAwesomeIcon icon={faBackwardStep} />
         </button>
@@ -64,7 +64,7 @@ export default function Player({
           type="button"
           onClick={onNext}
           disabled={!hasNext}
-          className={`px-1 ${!hasNext ? "opacity-40 cursor-default" : "cursor-pointer"}`}
+          className={`px-1 ${!hasNext ? "opacity-40 cursor-default" : "hover:bg-amber-100 rounded-md cursor-pointer"}`}
         >
           <FontAwesomeIcon icon={faForwardStep} />
         </button>

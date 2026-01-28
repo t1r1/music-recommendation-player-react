@@ -90,7 +90,7 @@ export default function TracksList({
   if (loading) return <p className="p-6">loading tracks…</p>;
 
   return (
-    <ul className="px-2 md:px-4 cursor-pointer py-4">
+    <ul className="mt-5 px-2 md:px-4 cursor-pointer py-4 max-h-[300px] overflow-hidden overflow-y-scroll">
       {tracks.map((t) => (
         <Track
           key={t.id}
