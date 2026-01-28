@@ -13,13 +13,17 @@ type TrackData = {
 type TracksListProps = {
   currentTrack: TrackData | null;
   onPlay: (track: TrackData) => void;
+  onPause: (track: TrackData) => void;
   onTracksChange: (tracks: TrackData[]) => void;
+  isPlaying: boolean;
 };
 
 export default function TracksList({
   currentTrack,
   onPlay,
+  onPause,
   onTracksChange,
+  isPlaying,
 }: TracksListProps) {
   const [tracks, setTracks] = useState<TrackData[]>([]);
   const [loading, setLoading] = useState(true);
@@ -92,6 +96,8 @@ export default function TracksList({
           key={t.id}
           track={t}
           onPlay={onPlay}
+          onPause={onPause}
+          isPlaying={isPlaying}
           isActive={currentTrack?.id === t.id}
         />
       ))}

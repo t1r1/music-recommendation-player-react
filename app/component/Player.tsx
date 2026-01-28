@@ -1,3 +1,6 @@
+"use client";
+
+import { RefObject } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBackwardStep,
@@ -14,28 +17,58 @@ type CurrentTrack = {
 
 type PlayerProps = {
   currentTrack: CurrentTrack | null;
-  audioRef: HTMLAudioElement | null;
+  audioRef: RefObject<HTMLAudioElement>;
+  onPrev: () => void;
+  onNext: () => void;
+  hasPrev: boolean;
+  hasNext: boolean;
 };
-export default function Player({ currentTrack, audioRef }: PlayerProps) {
+
+export default function Player({
+  currentTrack,
+  audioRef,
+  onPrev,
+  onNext,
+  hasPrev,
+  hasNext,
+}: PlayerProps) {
   return (
-    <div className="flex items-center mt-4">
+    <div className="text-center">
       {currentTrack ? (
-        <div className="overflow-hidden whitespace-nowrap text-ellipsis text-center text-sm max-w-[200px] mr-3">
+        <div className="font-mono text-center overflow-hidden whitespace-nowrap text-ellipsis text-center font-semibold">
           {currentTrack.artist} - {currentTrack.title}
         </div>
       ) : (
-        <div className="text-center max-w-[200px] mr-3 text-sm"></div>
+        <div className="text-center max-w-[200px] text-sm">&nbsp;</div>
       )}
-      <FontAwesomeIcon icon={faBackwardStep} />
-      <audio
-        ref={audioRef}
-        controls
-        preload="none"
-        src={currentTrack?.filepath}
-      >
-        Your browser does not support the audio element.
-      </audio>
-      <FontAwesomeIcon icon={faForwardStep} />
+      <div className="flex items-center justify-center mt-4 gap-3">
+        <button
+          type="button"
+          onClick={onPrev}
+          disabled={!hasPrev}
+          className={`px-1 ${!hasPrev ? "opacity-40 cursor-default" : "cursor-pointer"}`}
+        >
+          <FontAwesomeIcon icon={faBackwardStep} />
+        </button>
+
+        <audio
+          ref={audioRef}
+          controls
+          preload="none"
+          src={currentTrack?.filepath}
+        >
+          Your browser does not support the audio element.
+        </audio>
+
+        <button
+          type="button"
+          onClick={onNext}
+          disabled={!hasNext}
+          className={`px-1 ${!hasNext ? "opacity-40 cursor-default" : "cursor-pointer"}`}
+        >
+          <FontAwesomeIcon icon={faForwardStep} />
+        </button>
+      </div>
     </div>
   );
 }
