@@ -53,9 +53,7 @@ export default function TracksList({
       }
 
       try {
-        const res = await fetch(
-          `http://127.0.0.1:8000/api/recommendations/${foundMood.id}`,
-        );
+        const res = await fetch(`/api/recommendations/${foundMood.id}`);
 
         if (!res.ok) {
           throw new Error("failed to fetch recommendations");
