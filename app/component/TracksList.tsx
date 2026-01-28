@@ -39,7 +39,7 @@ export default function TracksList({
 
       // find the mood definition that matches currentMood
       const foundMood = moodMaps.moods.find(
-        (item) => item.mood === currentMood, // adjust "key" if your api uses a different field
+        (item) => item.mood === currentMood,
       );
 
       // if we didn't find a matching mood, clear tracks and stop
