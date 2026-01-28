@@ -53,8 +53,8 @@ export function MoodProvider({
   // store mood maps once; they are treated as static config
   const [moodMaps] = useState<MoodMaps>(initialMoodMaps);
 
-  // store the currently selected mood (this is interactive state)
-  const [currentMood, setCurrentMood] = useState(defaultMood);
+  // store the currently selected mood
+  const [currentMood, setCurrentMood] = useState<string>("");
 
   // memoize the context value to avoid unnecessary re-renders
   const value = useMemo(

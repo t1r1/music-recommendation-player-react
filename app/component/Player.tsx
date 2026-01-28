@@ -35,7 +35,7 @@ export default function Player({
   return (
     <div className="text-center">
       {currentTrack ? (
-        <div className="font-mono text-center overflow-hidden whitespace-nowrap text-ellipsis text-center font-semibold">
+        <div className="font-mono text-center overflow-hidden whitespace-nowrap text-ellipsis text-center">
           {currentTrack.artist} - {currentTrack.title}
         </div>
       ) : (

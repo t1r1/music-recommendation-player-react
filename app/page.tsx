@@ -159,13 +159,26 @@ export default function Home() {
     };
   }, [currentTrack, tracks]);
 
+  // autoplay when a mood is chosen
+  useEffect(() => {
+    if (tracks.length === 0) return;
+
+    setCurrentTrack(tracks[0]);
+    setIsPlaying(true);
+  }, [tracks]);
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
       <main className="flex min-h-screen w-full max-w-2xl flex-col items-center justify-center py-2 px-4 md:px-16 bg-white dark:bg-black">
         <h1 className="text-2xl">EmotiFM</h1>
         <p className="text-center mt-4">
-          My vibe set by mood:{" "}
-          <span className="font-semibold">{currentMood}</span>
+          {currentMood ? (
+            <span className="font-semibold">
+              My vibe set by mood: {currentMood}
+            </span>
+          ) : (
+            <span className="font-semibold">Choose your emotional vibe</span>
+          )}
         </p>
 
         <div className="mt-4 grid grid-cols-3 gap-4 gap-y-5 max-w-md mx-auto">
