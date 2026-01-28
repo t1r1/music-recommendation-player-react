@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-regular-svg-icons";
+import { faTowerBroadcast } from "@fortawesome/free-solid-svg-icons";
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
 
 type Props = {
@@ -48,10 +48,18 @@ export default function MoodButton({ label, mood, active, onClick }: Props) {
         transition-all
       `}
     >
-      <FontAwesomeIcon
-        icon={faPlay}
-        className="shrink-0 w-5 h-5 text-2xl text-white"
-      />
+      {active ? (
+        <FontAwesomeIcon
+          icon={faTowerBroadcast}
+          className="shrink-0 w-5 h-5 text-2xl text-white"
+        />
+      ) : (
+        <FontAwesomeIcon
+          icon={faPlay}
+          className="shrink-0 w-5 h-5 text-2xl text-white"
+        />
+      )}
+
       <span className="ml-1 whitespace-nowrap text-sm leading-tight text-white">
         {label}
       </span>
