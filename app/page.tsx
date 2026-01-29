@@ -168,52 +168,83 @@ export default function Home() {
   }, [tracks]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-2xl flex-col items-center justify-center py-2 px-4 md:px-16 bg-white dark:bg-black">
-        <h1 className="text-2xl">EmotiFM</h1>
-        <p className="text-center mt-4">
-          {currentMood ? (
-            <span className="font-semibold">
-              My vibe set by mood: {currentMood}
-            </span>
-          ) : (
-            <span className="font-semibold">Choose your emotional vibe</span>
-          )}
-        </p>
+    <div className="flex min-h-screen justify-center bg-zinc-50 dark:bg-black">
+      <main className="flex min-h-screen w-full max-w-2xl flex-col bg-white px-4 py-6 font-sans dark:bg-black md:px-16">
+        <div className="flex flex-col items-center">
+          <h1 className="text-2xl">EmotiFM</h1>
 
-        <div className="mt-4 grid grid-cols-3 gap-4 gap-y-5 max-w-md mx-auto">
-          {moodMaps.moods.map((mood) => (
-            <MoodButton
-              label={mood.mood}
-              key={mood.id}
-              mood={mood.mood}
-              active={isActive(mood.mood)}
-              onClick={() => setCurrentMood(mood.mood)}
+          <p className="mt-4 text-center">
+            {currentMood ? (
+              <span className="font-semibold">
+                my vibe set by mood: {currentMood}
+              </span>
+            ) : (
+              <span className="font-semibold">choose your emotional vibe</span>
+            )}
+          </p>
+
+          <div className="mt-4 grid w-full max-w-md grid-cols-3 gap-4 gap-y-5">
+            {moodMaps.moods.map((mood) => (
+              <MoodButton
+                label={mood.mood}
+                key={mood.id}
+                mood={mood.mood}
+                active={isActive(mood.mood)}
+                onClick={() => setCurrentMood(mood.mood)}
+              />
+            ))}
+          </div>
+
+          <section className="mt-6 w-full">
+            <Player
+              currentTrack={currentTrack}
+              audioRef={audioRef}
+              onNext={handleNext}
+              onPrev={handlePrev}
+              hasNext={hasNext}
+              hasPrev={hasPrev}
             />
-          ))}
+          </section>
+
+          <section className="mt-2 w-full">
+            <TracksList
+              mood={currentMood}
+              onPlay={onPlay}
+              onPause={onPause}
+              isPlaying={isPlaying}
+              currentTrack={currentTrack}
+              onTracksChange={setTracks}
+            />
+          </section>
         </div>
 
-        <section className="mt-5 w-full">
-          <Player
-            currentTrack={currentTrack}
-            audioRef={audioRef}
-            onNext={handleNext}
-            onPrev={handlePrev}
-            hasNext={hasNext}
-            hasPrev={hasPrev}
-          />
-        </section>
+        <footer className="mt-auto w-full border-t border-zinc-200 pt-10 text-xs leading-relaxed text-zinc-600 dark:border-zinc-800 dark:text-zinc-400">
+          <p className="font-medium">Disclaimer</p>
 
-        <section className="mt-1 w-full">
-          <TracksList
-            mood={currentMood}
-            onPlay={onPlay}
-            onPause={onPause}
-            isPlaying={isPlaying}
-            currentTrack={currentTrack}
-            onTracksChange={setTracks}
-          />
-        </section>
+          <p className="mt-2">
+            This application is a research prototype created as part of a
+            Computer Science study project at the University of London. It uses
+            the{" "}
+            <a
+              className="underline underline-offset-2 hover:text-zinc-900 dark:hover:text-zinc-200"
+              href="https://www.projects.science.uu.nl/memotion/emotifydata/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              emotify dataset
+            </a>{" "}
+            and Spotify audio features to generate experimental mood-based music
+            recommendations. Recommendations are provided for research and
+            demonstration purposes only and may be inaccurate. All third-party
+            datasets, trademarks, and content remain the property of their
+            respective owners. This project is not affiliated with, endorsed by,
+            or sponsored by Spotify or the Emotify project.
+          </p>
+
+          <p className="mt-2">
+            © 2025–2026 Maria Vorobeva. All rights reserved.
+          </p>
+        </footer>
       </main>
     </div>
   );
