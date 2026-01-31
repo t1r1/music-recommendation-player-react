@@ -4,6 +4,7 @@ import MoodButton from "./component/MoodButton";
 import TracksList from "./component/TracksList";
 import Player from "./component/Player";
 import { useMood } from "@/context/MoodContext";
+import GenreFilter from "./component/GenreFilter";
 
 type TrackData = {
   id: number;
@@ -18,7 +19,9 @@ export default function Home() {
   const [currentTrack, setCurrentTrack] = useState<TrackData | null>(null);
   const [tracks, setTracks] = useState<TrackData[]>([]);
   const [isPlaying, setIsPlaying] = useState(false);
-
+  const [genre, setGenre] = useState<
+    "pop" | "rock" | "classical" | "electronic" | null
+  >(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const isActive = (mood: string) => mood === currentMood;
@@ -205,6 +208,14 @@ export default function Home() {
               hasPrev={hasPrev}
             />
           </section>
+
+          {tracks.length > 0 ? (
+            <section className="mt-4">
+              <GenreFilter value={genre} onChange={setGenre} />
+            </section>
+          ) : (
+            ""
+          )}
 
           <section className="mt-2 w-full">
             <TracksList
