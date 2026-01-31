@@ -16,6 +16,7 @@ type TracksListProps = {
   onPause: (track: TrackData) => void;
   onTracksChange: (tracks: TrackData[]) => void;
   isPlaying: boolean;
+  genre: "pop" | "rock" | "classical" | "electronic" | null;
 };
 
 export default function TracksList({
@@ -24,6 +25,7 @@ export default function TracksList({
   onPause,
   onTracksChange,
   isPlaying,
+  genre,
 }: TracksListProps) {
   const [tracks, setTracks] = useState<TrackData[]>([]);
   const [loading, setLoading] = useState(true);
@@ -53,7 +55,15 @@ export default function TracksList({
       }
 
       try {
-        const res = await fetch(`/api/recommendations/${foundMood.id}`);
+        const params = new URLSearchParams();
+        if (genre) params.set("genre", genre);
+
+        const url =
+          params.toString().length > 0
+            ? `/api/recommendations/${foundMood.id}?${params.toString()}`
+            : `/api/recommendations/${foundMood.id}`;
+
+        const res = await fetch(url);
 
         if (!res.ok) {
           throw new Error("failed to fetch recommendations");
@@ -83,7 +93,7 @@ export default function TracksList({
     return () => {
       cancelled = true;
     };
-  }, [currentMood, moodMaps, onTracksChange]); // refetch whenever selected mood changes
+  }, [currentMood, moodMaps, onTracksChange, genre]); // refetch whenever selected mood changes
 
   if (loading) return <p className="p-6">loading tracks…</p>;
 

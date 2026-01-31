@@ -170,6 +170,11 @@ export default function Home() {
     setIsPlaying(true);
   }, [tracks]);
 
+  // reset genre when current mood is changed
+  useEffect(() => {
+    setGenre(null);
+  }, [currentMood]);
+
   return (
     <div className="flex min-h-screen justify-center bg-zinc-50 dark:bg-black">
       <main className="flex min-h-screen w-full max-w-2xl flex-col bg-white px-4 py-6 font-sans dark:bg-black md:px-16">
@@ -225,6 +230,7 @@ export default function Home() {
               isPlaying={isPlaying}
               currentTrack={currentTrack}
               onTracksChange={setTracks}
+              genre={genre}
             />
           </section>
         </div>
