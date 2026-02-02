@@ -51,12 +51,12 @@ export default function MoodButton({ label, mood, active, onClick }: Props) {
       {active ? (
         <FontAwesomeIcon
           icon={faTowerBroadcast}
-          className="shrink-0 w-5 h-5 text-2xl text-white"
+          className="shrink-0 w-4 h-4 md:w-5 md:h-5  text-white"
         />
       ) : (
         <FontAwesomeIcon
           icon={faPlay}
-          className="shrink-0 w-5 h-5 text-2xl text-white"
+          className="shrink-0 w-4 h-4 md:w-5 md:h-5 text-white"
         />
       )}
 

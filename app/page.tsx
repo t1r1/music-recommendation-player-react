@@ -191,7 +191,7 @@ export default function Home() {
             )}
           </p>
 
-          <div className="mt-4 grid w-full max-w-md grid-cols-3 gap-4 gap-y-5">
+          <div className="mt-4 grid w-full max-w-md grid-cols-3 gap-3 md:gap-4 gap-y-4 md:gap-y-5">
             {moodMaps.moods.map((mood) => (
               <MoodButton
                 label={mood.mood}

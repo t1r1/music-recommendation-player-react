@@ -1,6 +1,11 @@
 "use client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlay, faPause } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlay,
+  faPause,
+  faThumbsUp,
+  faThumbsDown,
+} from "@fortawesome/free-solid-svg-icons";
 type TrackData = {
   id: number;
   title: string;
@@ -55,6 +60,16 @@ export default function Track({
       <span className="text-sm bg-sky-50 font-mono px-1 rounded-md rounded-lg">
         {genre}
       </span>
+      <div className="ml-4 flex">
+        <FontAwesomeIcon
+          icon={faThumbsUp}
+          className="cursor-pointer mr-2 shrink-0 w-5 h-5 text-md text-[#4d7c0f] hover:text-gray-700"
+        />
+        <FontAwesomeIcon
+          icon={faThumbsDown}
+          className="cursor-pointer shrink-0 w-5 h-5 text-md text-[#a8a29e] hover:text-gray-700"
+        />
+      </div>
     </li>
   );
 }
