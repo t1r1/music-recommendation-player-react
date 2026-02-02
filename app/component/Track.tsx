@@ -6,13 +6,16 @@ import {
   faThumbsUp,
   faThumbsDown,
 } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type TrackData = {
   id: number;
   title: string;
   artist: string;
   genre: string;
+  // comes from backend (GET /evaluations merged into tracks)
+  // 1 = liked, -1 = disliked, 0 or undefined = no evaluation yet
+  liked?: 1 | -1 | 0;
 };
 
 type TrackProps = {
@@ -21,7 +24,7 @@ type TrackProps = {
   onPause: (track: TrackData) => void;
   isActive: boolean;
   isPlaying: boolean;
-  userSessionId: string; // <-- pass this from higher up
+  userSessionId: string; // you might not actually need this if middleware handles it
 };
 
 export default function Track({
@@ -30,45 +33,61 @@ export default function Track({
   onPause,
   isActive,
   isPlaying,
-  userSessionId,
+  userSessionId, // currently unused, but kept for future if you want it in the body
 }: TrackProps) {
-  const { id, title, artist, genre } = track;
+  const { id, title, artist, genre, liked } = track;
 
-  // Optional: local state for quick visual feedback
-  const [likedState, setLikedState] = useState<1 | -1 | 0>(0); // 1 = liked, -1 = disliked, 0 = none
+  // Local state for UI (initialised from props, and kept in sync)
+  const [likedState, setLikedState] = useState<1 | -1 | 0>(liked ?? 0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // keep local state in sync if parent refetches data / mood changes
+  useEffect(() => {
+    setLikedState(liked ?? 0);
+  }, [liked]);
 
   // only show Pause when:
   //  1. this track is the currentTrack (isActive)
   //  2. and the global player is playing (isPlaying)
   const showPause = isActive && isPlaying;
 
-  const handleEvaluate = async (liked: 1 | -1) => {
+  const handleEvaluate = async (newLiked: 1 | -1) => {
     if (isSubmitting) return;
+
+    // If you want "toggle off" behaviour (clicking the same thumb again resets to neutral),
+    // you can uncomment this block:
+    //
+    // const payloadLiked: 1 | -1 | 0 =
+    //   likedState === newLiked ? 0 : newLiked;
+    //
+    // For now we just always send 1 or -1:
+    const payloadLiked = newLiked;
 
     try {
       setIsSubmitting(true);
-      // optimistic update
-      setLikedState(liked);
 
-      const res = await fetch("/api/evaluation", {
+      // optimistic update in UI
+      setLikedState(payloadLiked);
+
+      const res = await fetch("/api/evaluations", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           recommendation_id: id,
-          liked: liked,
+          liked: payloadLiked,
+          // user_session_id: userSessionId, // only if your backend expects it in JSON
         }),
       });
 
       if (!res.ok) {
-        // if backend fails, revert optimistic change
-        setLikedState(0);
+        // revert if backend fails
+        setLikedState(liked ?? 0);
         console.error("Failed to submit evaluation", await res.text());
       }
     } catch (err) {
-      setLikedState(0);
+      setLikedState(liked ?? 0);
       console.error("Error submitting evaluation", err);
     } finally {
       setIsSubmitting(false);

@@ -6,10 +6,13 @@ import Track from "./Track";
 
 type TrackData = {
   id: string;
+  title?: string;
+  artist?: string;
+  genre?: string;
+  liked?: 1 | -1 | 0; // normalised like state for UI
   [key: string]: any;
 };
 
-// props that trackslist receives from the parent
 type TracksListProps = {
   currentTrack: TrackData | null;
   onPlay: (track: TrackData) => void;
@@ -36,12 +39,12 @@ export default function TracksList({
   useEffect(() => {
     let cancelled = false;
 
-    const fetchTracks = async () => {
+    const fetchData = async () => {
       setLoading(true);
 
-      // find the mood definition that matches currentMood
+      // 1) find the mood definition that matches currentMood
       const foundMood = moodMaps.moods.find(
-        (item) => item.mood === currentMood,
+        (item: any) => item.mood === currentMood,
       );
 
       // if we didn't find a matching mood, clear tracks and stop
@@ -55,6 +58,7 @@ export default function TracksList({
       }
 
       try {
+        // 2) build recommendations URL (optionally with genre)
         const params = new URLSearchParams();
         if (genre) params.set("genre", genre);
 
@@ -63,20 +67,51 @@ export default function TracksList({
             ? `/api/recommendations/${foundMood.id}?${params.toString()}`
             : `/api/recommendations/${foundMood.id}`;
 
-        const res = await fetch(url);
+        // 3) fetch recommendations and evaluations in parallel
+        const [recsRes, evalsRes] = await Promise.all([
+          fetch(url),
+          fetch(`/api/evaluations`), // backend figures out user_session_id
+        ]);
 
-        if (!res.ok) {
+        if (!recsRes.ok) {
           throw new Error("failed to fetch recommendations");
         }
+        if (!evalsRes.ok) {
+          throw new Error("failed to fetch evaluations");
+        }
 
-        const data = await res.json();
-        const fetchedTracks = data.tracks ?? data;
+        const recsJson = await recsRes.json();
+        const evalsJson = await evalsRes.json();
+
+        const fetchedTracks: TrackData[] = recsJson.tracks ?? recsJson;
+
+        type Evaluation = {
+          recommendation_id: string | number;
+          liked: 1 | -1 | null; // can be null
+        };
+
+        const evaluations: Evaluation[] = evalsJson;
+
+        // 4) duild lookup: recommendation_id -> liked (only 1 or -1)
+        const likedById = new Map<string, 1 | -1>();
+        for (const ev of evaluations) {
+          if (ev.liked === 1 || ev.liked === -1) {
+            likedById.set(String(ev.recommendation_id), ev.liked);
+          }
+          // if ev.liked is null, skip it, then no evaluation yet
+        }
+
+        // 5) merge liked info into tracks, normalising to 1 | -1 | 0
+        const mergedTracks = fetchedTracks.map((t) => ({
+          ...t,
+          liked: likedById.get(String(t.id)) ?? 0, // 0 = neutral / none
+        }));
 
         if (!cancelled) {
-          setTracks(fetchedTracks);
-          onTracksChange(fetchedTracks);
+          setTracks(mergedTracks);
+          onTracksChange(mergedTracks);
           setLoading(false);
-          console.log(data.tracks);
+          console.log("tracks with liked state", mergedTracks);
         }
       } catch (err) {
         if (!cancelled) {
@@ -88,12 +123,12 @@ export default function TracksList({
       }
     };
 
-    fetchTracks();
+    fetchData();
 
     return () => {
       cancelled = true;
     };
-  }, [currentMood, moodMaps, onTracksChange, genre]); // refetch whenever selected mood changes
+  }, [currentMood, moodMaps, onTracksChange, genre]);
 
   if (loading) return <p className="p-6">loading tracks…</p>;
 

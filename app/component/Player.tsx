@@ -39,7 +39,9 @@ export default function Player({
           {currentTrack.artist} - {currentTrack.title}
         </div>
       ) : (
-        <div className="text-center max-w-[200px] text-sm">&nbsp;</div>
+        <div className="font-mono text-center overflow-hidden whitespace-nowrap text-ellipsis text-center">
+          Press a mood button to begin playback
+        </div>
       )}
       <div className="flex items-center justify-center mt-4 gap-1 md:gap-3">
         <button
