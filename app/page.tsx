@@ -164,6 +164,7 @@ export default function Home() {
 
   // autoplay when a mood is chosen
   useEffect(() => {
+    console.log("autoplay", tracks);
     if (tracks.length === 0) return;
 
     setCurrentTrack(tracks[0]);
@@ -222,7 +223,13 @@ export default function Home() {
             ""
           )}
 
-          <section className="mt-2 w-full">
+          <section className="mt-1 w-full">
+            {tracks.length === 0 && (
+              <div className="text-center mt-3 text-sm">
+                Playlist is empty. Press a mood button to begin playback.
+              </div>
+            )}
+
             <TracksList
               mood={currentMood}
               onPlay={onPlay}
