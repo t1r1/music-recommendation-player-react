@@ -243,21 +243,28 @@ export default function Home() {
         </div>
 
         <footer className="mt-auto w-full border-t border-zinc-200 pt-10 text-xs leading-relaxed text-zinc-600 dark:border-zinc-800 dark:text-zinc-400">
-          <p className="font-medium">Disclaimer</p>
+          <p className="font-medium font-semibold">Disclaimer</p>
 
           <p className="mt-2">
-            This application is a research prototype created as part of a
-            Computer Science study project at the University of London. It uses
-            the{" "}
+            This application is a non-commercial research prototype created as
+            part of a Computer Science study project at the University of
+            London. It uses the{" "}
             <a
               className="underline underline-offset-2 hover:text-zinc-900 dark:hover:text-zinc-200"
               href="https://www.projects.science.uu.nl/memotion/emotifydata/"
               target="_blank"
               rel="noreferrer"
             >
-              emotify dataset
+              Emotify dataset
             </a>{" "}
-            and Spotify audio features to generate experimental mood-based music
+            and{" "}
+            <a
+              className="underline underline-offset-2 hover:text-zinc-900 dark:hover:text-zinc-200"
+              href="https://developer.spotify.com/documentation/web-api/reference/get-audio-features"
+            >
+              Spotify
+            </a>{" "}
+            audio features to generate experimental mood-based music
             recommendations. Recommendations are provided for research and
             demonstration purposes only and may be inaccurate. All third-party
             datasets, trademarks, and content remain the property of their
@@ -266,8 +273,37 @@ export default function Home() {
           </p>
 
           <p className="mt-2">
-            © 2025–2026 Maria Vorobeva. All rights reserved.
+            © The audio recordings are copyrighted by their original rights
+            holders, such as artists or labels, and distributed by{" "}
+            <a
+              href="http://magnatune.com/info/licensing"
+              className="underline underline-offset-2 hover:text-zinc-900 dark:hover:text-zinc-200"
+            >
+              Magnatune
+            </a>{" "}
+            under a{" "}
+            <a
+              href="http://magnatune.com/info/cc_licensed"
+              className="underline underline-offset-2 hover:text-zinc-900 dark:hover:text-zinc-200"
+            >
+              Creative Commons by-nc-sa v1.0 license
+            </a>
+            .
           </p>
+
+          <p className="mt-4 font-semibold mb-2">References</p>
+          <ol>
+            <li>
+              1. Emotify Dataset, 2025. Emotify data repository. Available at:
+              https://www.projects.science.uu.nl/memotion/emotifydata/
+            </li>
+            <li>
+              2. Aljanaki, A., Wiering, F. and Veltkamp, R.C. (2016) ‘Studying
+              emotion induced by music through a crowdsourcing game’,
+              Information Processing & Management, 52(1), pp. 115–128.
+              doi:10.1016/j.ipm.2015.03.004.
+            </li>
+          </ol>
         </footer>
       </main>
     </div>
