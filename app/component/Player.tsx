@@ -43,7 +43,7 @@ export default function Player({
           &nbsp;
         </div>
       )}
-      <div className="flex items-center justify-center mt-4 gap-1 md:gap-3">
+      <div className="flex px-1 items-center justify-center mt-4 gap-1 md:gap-3">
         <button
           type="button"
           onClick={onPrev}
