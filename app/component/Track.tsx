@@ -97,8 +97,8 @@ export default function Track({
   return (
     <li
       key={id}
-      className={`my-1 cursor-pointer hover:text-gray-700 flex items-center round-sm px-1 py-2 ${
-        isActive && "bg-amber-100 hover:bg-amber-200"
+      className={`my-1 cursor-pointer flex items-center round-sm px-1 py-2 dark:hover:bg-amber-50 dark:hover:text-black ${
+        isActive ? " bg-amber-100 text-black" : "hover:text-green-100"
       }`}
     >
       <span className="flex-1 leading-6">
@@ -113,14 +113,14 @@ export default function Track({
           <button type="button" onClick={() => onPlay(track)}>
             <FontAwesomeIcon
               icon={faPlay}
-              className="cursor-pointer mr-4 shrink-0 w-5 h-5 text-md text-black hover:text-gray-700"
+              className="cursor-pointer mr-4 shrink-0 w-5 h-5 text-md dark:text-gray-100 text-black hover:text-gray-700"
             />
           </button>
         )}
         {artist} - {title}
       </span>
 
-      <span className="text-sm bg-sky-50 font-mono px-1 rounded-md rounded-lg">
+      <span className="text-sm bg-sky-50 dark:text-gray-800 font-mono px-1 rounded-md rounded-lg">
         {genre}
       </span>
 
