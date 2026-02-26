@@ -33,7 +33,6 @@ export default function Track({
   onPause,
   isActive,
   isPlaying,
-  userSessionId,
 }: TrackProps) {
   const { id, title, artist, genre, liked } = track;
 
@@ -86,9 +85,20 @@ export default function Track({
     }
   };
 
+  const handleTrackClick = (e) => {
+    if (e.target.tagName === "SPAN" || e.target.tagName === "LI") {
+      if (isActive) {
+        onPause(track);
+      } else {
+        onPlay(track);
+      }
+    }
+  };
+
   return (
     <li
       key={id}
+      onClick={handleTrackClick}
       data-test-id="track-item"
       className={`group my-1 cursor-pointer flex items-center round-sm px-1 py-2 dark:hover:bg-amber-50 dark:hover:text-black ${
         isActive ? "bg-amber-300 text-black" : "hover:bg-teal-100"

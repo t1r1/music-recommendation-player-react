@@ -141,7 +141,7 @@ export default function TracksList({
           onPlay={onPlay}
           onPause={onPause}
           isPlaying={isPlaying}
-          isActive={currentTrack?.id === t.id}
+          isActive={currentTrack?.id === t.id && isPlaying}
         />
       ))}
     </ul>
