@@ -24,7 +24,7 @@ type TrackProps = {
   onPause: (track: TrackData) => void;
   isActive: boolean;
   isPlaying: boolean;
-  userSessionId: string; // you might not actually need this if middleware handles it
+  userSessionId: string;
 };
 
 export default function Track({
@@ -33,7 +33,7 @@ export default function Track({
   onPause,
   isActive,
   isPlaying,
-  userSessionId, // currently unused, but kept for future if you want it in the body
+  userSessionId,
 }: TrackProps) {
   const { id, title, artist, genre, liked } = track;
 
@@ -54,13 +54,6 @@ export default function Track({
   const handleEvaluate = async (newLiked: 1 | -1) => {
     if (isSubmitting) return;
 
-    // If you want "toggle off" behaviour (clicking the same thumb again resets to neutral),
-    // you can uncomment this block:
-    //
-    // const payloadLiked: 1 | -1 | 0 =
-    //   likedState === newLiked ? 0 : newLiked;
-    //
-    // For now we just always send 1 or -1:
     const payloadLiked = newLiked;
 
     try {
@@ -77,7 +70,6 @@ export default function Track({
         body: JSON.stringify({
           recommendation_id: id,
           liked: payloadLiked,
-          // user_session_id: userSessionId, // only if your backend expects it in JSON
         }),
       });
 
@@ -97,8 +89,8 @@ export default function Track({
   return (
     <li
       key={id}
-      className={`my-1 cursor-pointer flex items-center round-sm px-1 py-2 dark:hover:bg-amber-50 dark:hover:text-black ${
-        isActive ? "bg-amber-300 text-black" : "hover:text-green-100"
+      className={`group my-1 cursor-pointer flex items-center round-sm px-1 py-2 dark:hover:bg-amber-50 dark:hover:text-black ${
+        isActive ? "bg-amber-300 text-black" : "hover:bg-teal-100"
       }`}
     >
       <span className="flex-1 leading-6">
@@ -113,7 +105,7 @@ export default function Track({
           <button type="button" onClick={() => onPlay(track)}>
             <FontAwesomeIcon
               icon={faPlay}
-              className="cursor-pointer mr-4 shrink-0 w-5 h-5 text-md dark:text-gray-100 text-black hover:text-gray-700"
+              className="group-hover:text-black cursor-pointer mr-4 shrink-0 w-5 h-5 text-md dark:text-gray-100 text-black hover:text-gray-700"
             />
           </button>
         )}
