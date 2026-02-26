@@ -16,6 +16,18 @@ const GENRES: { label: string; value: Genre }[] = [
   { label: "Classical", value: "classical" },
   { label: "Electronic", value: "electronic" },
 ];
+function chipClasses(selected: boolean, disabled: boolean) {
+  return `
+    rounded-full border px-3 py-2 text-sm leading-none select-none
+    transition-colors
+    ${
+      selected
+        ? "bg-slate-900 text-white border-slate-900 dark:bg-amber-300 dark:text-black dark:border-amber-300"
+        : "bg-white text-slate-900 border-slate-300 hover:bg-slate-100 dark:bg-slate-800 dark:text-slate-100 dark:border-slate-600 dark:hover:bg-slate-700"
+    }
+    ${disabled ? "opacity-60 cursor-not-allowed" : "cursor-pointer"}
+  `;
+}
 
 export default function GenreFilter({
   value,
@@ -38,7 +50,7 @@ export default function GenreFilter({
         disabled={disabled}
         onClick={() => onChange(null)}
         aria-pressed={value === null}
-        style={chipStyle(value === null, !!disabled)}
+        className={chipClasses(value === null, !!disabled)}
       >
         All
       </button>
@@ -52,7 +64,7 @@ export default function GenreFilter({
             disabled={disabled}
             onClick={() => onChange(selected ? null : g.value)} // toggle off if clicked again
             aria-pressed={selected}
-            style={chipStyle(selected, !!disabled)}
+            className={chipClasses(selected, !!disabled)}
           >
             {g.label}
           </button>
@@ -60,20 +72,4 @@ export default function GenreFilter({
       })}
     </div>
   );
-}
-
-function chipStyle(selected: boolean, disabled: boolean): React.CSSProperties {
-  return {
-    borderRadius: 999,
-    border: "1px solid",
-    borderColor: selected ? "#111" : "#ccc",
-    background: selected ? "#111" : "#fff",
-    color: selected ? "#fff" : "#111",
-    padding: "8px 12px",
-    fontSize: 14,
-    lineHeight: 1,
-    cursor: disabled ? "not-allowed" : "pointer",
-    opacity: disabled ? 0.6 : 1,
-    userSelect: "none",
-  };
 }

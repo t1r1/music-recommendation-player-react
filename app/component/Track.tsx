@@ -98,7 +98,7 @@ export default function Track({
     <li
       key={id}
       className={`my-1 cursor-pointer flex items-center round-sm px-1 py-2 dark:hover:bg-amber-50 dark:hover:text-black ${
-        isActive ? " bg-amber-100 text-black" : "hover:text-green-100"
+        isActive ? "bg-amber-300 text-black" : "hover:text-green-100"
       }`}
     >
       <span className="flex-1 leading-6">
