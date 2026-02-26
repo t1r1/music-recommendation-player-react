@@ -89,6 +89,7 @@ export default function Track({
   return (
     <li
       key={id}
+      data-test-id="track-item"
       className={`group my-1 cursor-pointer flex items-center round-sm px-1 py-2 dark:hover:bg-amber-50 dark:hover:text-black ${
         isActive ? "bg-amber-300 text-black" : "hover:bg-teal-100"
       }`}

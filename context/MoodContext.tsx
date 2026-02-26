@@ -8,21 +8,20 @@ import React, { createContext, useContext, useMemo, useState } from "react";
  * this comes from the api and drives the ui
  */
 type MoodConfig = {
-  key: string; // unique mood id (e.g. "sad", "happy")
+  key: string; // unique mood id ("sad", "happy")
   label: string; // text shown in the ui
   gradient: string; // tailwind gradient classes
 };
 
 /**
  * describes the full mood payload returned by the api
- * moods is an array so we can render it easily with .map()
  */
 type MoodMaps = {
   moods: MoodConfig[];
 };
 
 /**
- * this is the shape of the data exposed through react context
+ * this is the shape of the data exposed through React context
  */
 type MoodContextValue = {
   moodMaps: MoodMaps; // all mood configurations
@@ -32,7 +31,7 @@ type MoodContextValue = {
 
 /**
  * create the context container
- * default value is null so we can detect misuse
+ * default value is null
  */
 const MoodContext = createContext<MoodContextValue | null>(null);
 
