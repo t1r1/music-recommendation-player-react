@@ -104,7 +104,7 @@ export default function Track({
         isActive ? "bg-amber-300 text-black" : "hover:bg-teal-100"
       }`}
     >
-      <span className="flex-1 leading-6">
+      <span className="flex-1 leading-6 cursor-pointer">
         {showPause ? (
           <button type="button" onClick={() => onPause(track)}>
             <FontAwesomeIcon
