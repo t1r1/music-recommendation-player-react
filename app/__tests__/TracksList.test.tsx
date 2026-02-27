@@ -197,8 +197,11 @@ describe("TracksList", () => {
   it("marks the currentTrack as active", async () => {
     setupSuccessfulFetch();
 
-    const props = baseProps();
-    props.currentTrack = { id: "2" } as any;
+    const props = {
+      ...baseProps(),
+      currentTrack: { id: "2" } as any,
+      isPlaying: true,
+    };
 
     render(<TracksList {...props} />);
 
