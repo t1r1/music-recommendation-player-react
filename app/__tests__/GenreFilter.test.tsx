@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import GenreFilter from "../component/GenreFilter";
 
 describe("GenreFilter", () => {
-  test("selects a genre and toggles it off when clicked again", async () => {
+  it("selects a genre and toggles it off when clicked again", async () => {
     const user = userEvent.setup();
     const onChange = vi.fn();
 
@@ -12,26 +12,28 @@ describe("GenreFilter", () => {
     );
 
     // first click selects Pop
-    await user.click(screen.getByRole("button", { name: "Pop" }));
+    await user.click(
+      screen.getByRole("button", { name: /filter by pop genre/i }),
+    );
     expect(onChange).toHaveBeenCalledWith("pop");
 
-    onChange.mockClear();
+    // simulate parent updating the value prop
+    rerender(<GenreFilter value="pop" onChange={onChange} />);
 
-    // rerender with Pop selected
-    rerender(<GenreFilter value={"pop"} onChange={onChange} />);
-
-    // clicking again should clear it
-    await user.click(screen.getByRole("button", { name: "Pop" }));
-    expect(onChange).toHaveBeenCalledWith(null);
+    // second click toggles Pop off
+    await user.click(
+      screen.getByRole("button", { name: /pop genre selected/i }),
+    );
+    expect(onChange).toHaveBeenLastCalledWith(null);
   });
 
-  test("clicking All clears the selection", async () => {
+  it("clicking All clears the selection", async () => {
     const user = userEvent.setup();
     const onChange = vi.fn();
 
     render(<GenreFilter value={"rock"} onChange={onChange} />);
 
-    await user.click(screen.getByRole("button", { name: "All" }));
+    await user.click(screen.getByRole("button", { name: /show all genres/i }));
     expect(onChange).toHaveBeenCalledWith(null);
   });
 });
