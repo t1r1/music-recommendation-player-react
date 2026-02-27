@@ -13,8 +13,6 @@ type TrackData = {
   title: string;
   artist: string;
   genre: string;
-  // comes from backend (GET /evaluations merged into tracks)
-  // 1 = liked, -1 = disliked, 0 or undefined = no evaluation yet
   liked?: 1 | -1 | 0;
 };
 
@@ -103,42 +101,70 @@ export default function Track({
       className={`group my-1 cursor-pointer flex items-center round-sm px-1 py-2 dark:hover:bg-amber-50 dark:hover:text-black ${
         isActive ? "bg-amber-300 text-black" : "hover:bg-teal-100"
       }`}
+      role="listitem"
+      aria-current={isActive ? "true" : undefined}
+      aria-label={`${artist} – ${title}`}
     >
       <span className="flex-1 leading-6 cursor-pointer">
         {showPause ? (
-          <button type="button" onClick={() => onPause(track)}>
+          <button
+            type="button"
+            onClick={() => onPause(track)}
+            aria-label={`Pause ${artist} – ${title}`}
+            aria-pressed={showPause}
+          >
             <FontAwesomeIcon
               icon={faPause}
               className="cursor-pointer mr-4 shrink-0 w-5 h-5 text-md text-black hover:text-gray-700"
+              aria-hidden="true"
             />
           </button>
         ) : (
-          <button type="button" onClick={() => onPlay(track)}>
+          <button
+            type="button"
+            onClick={() => onPlay(track)}
+            aria-label={`Play ${artist} – ${title}`}
+            aria-pressed={showPause}
+          >
             <FontAwesomeIcon
               icon={faPlay}
               className="group-hover:text-black cursor-pointer mr-4 shrink-0 w-5 h-5 text-md dark:text-gray-100 text-black hover:text-gray-700"
+              aria-hidden="true"
             />
           </button>
         )}
         {artist} - {title}
       </span>
 
-      <span className="text-sm bg-sky-50 dark:text-gray-800 font-mono px-1 rounded-md rounded-lg">
+      <span
+        className="text-sm bg-sky-50 dark:text-gray-800 font-mono px-1 rounded-md rounded-lg"
+        aria-label={`Genre: ${genre}`}
+      >
         {genre}
       </span>
 
-      <div className="ml-4 flex">
+      <div
+        className="ml-4 flex"
+        role="group"
+        aria-label="Rate this track"
+        aria-busy={isSubmitting ? "true" : "false"}
+      >
         <button
           type="button"
           onClick={() => handleEvaluate(1)}
           disabled={isSubmitting}
-          aria-label="Like this track"
+          aria-label={
+            likedState === 1 ? "Remove like from this track" : "Like this track"
+          }
+          aria-pressed={likedState === 1}
+          aria-disabled={isSubmitting}
         >
           <FontAwesomeIcon
             icon={faThumbsUp}
             className={`cursor-pointer mr-2 shrink-0 w-5 h-5 text-md hover:text-gray-700 ${
               likedState === 1 ? "text-green-600" : "text-[#a8a29e]"
             }`}
+            aria-hidden="true"
           />
         </button>
 
@@ -146,13 +172,20 @@ export default function Track({
           type="button"
           onClick={() => handleEvaluate(-1)}
           disabled={isSubmitting}
-          aria-label="Dislike this track"
+          aria-label={
+            likedState === -1
+              ? "Remove dislike from this track"
+              : "Dislike this track"
+          }
+          aria-pressed={likedState === -1}
+          aria-disabled={isSubmitting}
         >
           <FontAwesomeIcon
             icon={faThumbsDown}
             className={`cursor-pointer shrink-0 w-5 h-5 text-md hover:text-gray-700 ${
               likedState === -1 ? "text-red-600" : "text-[#a8a29e]"
             }`}
+            aria-hidden="true"
           />
         </button>
       </div>
