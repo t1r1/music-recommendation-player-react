@@ -35,9 +35,13 @@ export default function MoodButton({ label, mood, active, onClick }: Props) {
     <button
       onClick={onClick}
       id={label.toLowerCase()}
+      type="button"
+      aria-pressed={active ? "true" : "false"}
+      aria-label={active ? `${label} mood selected` : `Select ${label} mood`}
       className={`
         hover:brightness-95 hover:-translate-y-0.5 hover:shadow-md
         active:brightness-90
+        focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-black dark:focus-visible:ring-white
         cursor-pointer w-full h-10 px-2 flex  items-center justify-center rounded-xl font-semibold text-white
         bg-gradient-to-r ${gradients[mood]}
         ${
@@ -52,11 +56,13 @@ export default function MoodButton({ label, mood, active, onClick }: Props) {
         <FontAwesomeIcon
           icon={faTowerBroadcast}
           className="shrink-0 w-4 h-4 md:w-5 md:h-5  text-white"
+          aria-hidden="true"
         />
       ) : (
         <FontAwesomeIcon
           icon={faPlay}
           className="shrink-0 w-4 h-4 md:w-5 md:h-5 text-white"
+          aria-hidden="true"
         />
       )}
 
