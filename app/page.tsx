@@ -178,11 +178,14 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen justify-center bg-zinc-50 dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col bg-white px-4 py-6 font-sans dark:bg-black md:px-16">
+      <main
+        className="flex min-h-screen w-full max-w-3xl flex-col bg-white px-4 py-6 font-sans dark:bg-black md:px-16"
+        aria-label="EmotiFM mood-based music recommendation player"
+      >
         <div className="flex flex-col items-center">
           <h1 className="text-2xl">EmotiFM</h1>
 
-          <p className="mt-4 text-center">
+          <p className="mt-4 text-center" aria-live="polite" aria-atomic="true">
             {currentMood ? (
               <span className="font-semibold">
                 my vibe set by mood: {currentMood}
@@ -192,7 +195,11 @@ export default function Home() {
             )}
           </p>
 
-          <div className="mt-4 grid w-full max-w-md grid-cols-3 gap-3 md:gap-4 gap-y-4 md:gap-y-5">
+          <div
+            className="mt-4 grid w-full max-w-md grid-cols-3 gap-3 md:gap-4 gap-y-4 md:gap-y-5"
+            role="group"
+            aria-label="Choose a mood to start your playlist"
+          >
             {moodMaps.moods.map((mood) => (
               <MoodButton
                 label={mood.mood}
@@ -204,7 +211,7 @@ export default function Home() {
             ))}
           </div>
 
-          <section className="mt-6 w-full">
+          <section className="mt-6 w-full" aria-label="Audio player">
             <Player
               currentTrack={currentTrack}
               audioRef={audioRef}
@@ -216,16 +223,23 @@ export default function Home() {
           </section>
 
           {tracks.length > 0 ? (
-            <section className="mt-4">
+            <section
+              className="mt-4"
+              aria-label="Filter playlist by musical genre"
+            >
               <GenreFilter value={genre} onChange={setGenre} />
             </section>
           ) : (
             ""
           )}
 
-          <section className="mt-1 w-full">
+          <section className="mt-1 w-full" aria-label="Track list">
             {tracks.length === 0 && (
-              <div className="text-center mt-3 text-sm">
+              <div
+                className="text-center mt-3 text-sm"
+                role="status"
+                aria-live="polite"
+              >
                 Playlist is empty. Press a mood button to begin playback.
               </div>
             )}
@@ -242,7 +256,11 @@ export default function Home() {
           </section>
         </div>
 
-        <footer className="mt-auto w-full border-t border-zinc-200 pt-10 text-xs leading-relaxed text-zinc-600 dark:border-zinc-800 dark:text-zinc-400">
+        <footer
+          className="mt-auto w-full border-t border-zinc-200 pt-10 text-xs leading-relaxed text-zinc-600 dark:border-zinc-800 dark:text-zinc-400"
+          role="contentinfo"
+          aria-label="About this project and references"
+        >
           <p className="font-medium font-semibold">Disclaimer</p>
 
           <p className="mt-2">
@@ -253,7 +271,7 @@ export default function Home() {
               className="underline underline-offset-2 hover:text-zinc-900 dark:hover:text-zinc-200"
               href="https://www.projects.science.uu.nl/memotion/emotifydata/"
               target="_blank"
-              rel="noreferrer"
+              rel="noreferrer noopener"
             >
               Emotify dataset
             </a>{" "}
@@ -261,6 +279,8 @@ export default function Home() {
             <a
               className="underline underline-offset-2 hover:text-zinc-900 dark:hover:text-zinc-200"
               href="https://developer.spotify.com/documentation/web-api/reference/get-audio-features"
+              target="_blank"
+              rel="noreferrer noopener"
             >
               Spotify
             </a>{" "}
@@ -292,7 +312,7 @@ export default function Home() {
           </p>
 
           <p className="mt-4 font-semibold mb-2">References</p>
-          <ol>
+          <ol aria-label="Key references for this project">
             <li>
               1. Emotify Dataset, 2025. Emotify data repository. Available at:
               https://www.projects.science.uu.nl/memotion/emotifydata/
