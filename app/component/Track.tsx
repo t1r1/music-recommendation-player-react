@@ -160,6 +160,7 @@ export default function Track({
         <button
           type="button"
           onClick={() => handleEvaluate(1)}
+          className="min-w-[24px]"
           disabled={isSubmitting}
           aria-label={
             likedState === 1 ? "Remove like from this track" : "Like this track"
@@ -169,7 +170,7 @@ export default function Track({
         >
           <FontAwesomeIcon
             icon={faThumbsUp}
-            className={`cursor-pointer mr-2 shrink-0 w-6 h-6 text-md hover:text-gray-700 ${
+            className={`cursor-pointer mr-2 shrink-0 w-5! h-5! text-md hover:text-gray-700 ${
               likedState === 1 ? "text-green-600" : "text-[#a8a29e]"
             }`}
             aria-hidden="true"
@@ -178,6 +179,7 @@ export default function Track({
 
         <button
           type="button"
+          className="min-w-[24px]"
           onClick={() => handleEvaluate(-1)}
           disabled={isSubmitting}
           aria-label={
@@ -190,7 +192,7 @@ export default function Track({
         >
           <FontAwesomeIcon
             icon={faThumbsDown}
-            className={`cursor-pointer shrink-0 w-6 h-6 text-md hover:text-gray-700 ${
+            className={`cursor-pointer shrink-0 w-5! h-5! text-md hover:text-gray-700 ${
               likedState === -1 ? "text-red-600" : "text-[#a8a29e]"
             }`}
             aria-hidden="true"
