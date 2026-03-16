@@ -14,6 +14,7 @@ type TrackData = {
   artist: string;
   genre: string;
   liked?: 1 | -1 | 0;
+  relevance: number;
 };
 
 type TrackProps = {
@@ -32,7 +33,7 @@ export default function Track({
   isActive,
   isPlaying,
 }: TrackProps) {
-  const { id, title, artist, genre, liked } = track;
+  const { id, title, artist, genre, liked, relevance } = track;
 
   // Local state for UI (initialised from props, and kept in sync)
   const [likedState, setLikedState] = useState<1 | -1 | 0>(liked ?? 0);
@@ -137,10 +138,17 @@ export default function Track({
       </span>
 
       <span
-        className="text-sm bg-sky-50 dark:text-gray-800 font-mono px-1 rounded-md rounded-lg"
+        className="text-sm bg-sky-50 dark:bg-sky-100 dark:text-gray-800 font-mono px-1 rounded-md rounded-lg"
         aria-label={`Genre: ${genre}`}
       >
         {genre}
+      </span>
+
+      <span
+        className="ml-1 text-sm bg-emerald-50 dark:bg-emerald-100 dark:text-gray-800 font-mono px-1 rounded-md rounded-lg"
+        aria-label={`Score: ${relevance}`}
+      >
+        score: {relevance}
       </span>
 
       <div
@@ -161,7 +169,7 @@ export default function Track({
         >
           <FontAwesomeIcon
             icon={faThumbsUp}
-            className={`cursor-pointer mr-2 shrink-0 w-5 h-5 text-md hover:text-gray-700 ${
+            className={`cursor-pointer mr-2 shrink-0 w-6 h-6 text-md hover:text-gray-700 ${
               likedState === 1 ? "text-green-600" : "text-[#a8a29e]"
             }`}
             aria-hidden="true"
@@ -182,7 +190,7 @@ export default function Track({
         >
           <FontAwesomeIcon
             icon={faThumbsDown}
-            className={`cursor-pointer shrink-0 w-5 h-5 text-md hover:text-gray-700 ${
+            className={`cursor-pointer shrink-0 w-6 h-6 text-md hover:text-gray-700 ${
               likedState === -1 ? "text-red-600" : "text-[#a8a29e]"
             }`}
             aria-hidden="true"

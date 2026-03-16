@@ -39,21 +39,11 @@ export default function Player({
   return (
     <div className="text-center" role="region" aria-label="Audio player">
       {currentTrack ? (
-        <div
-          className="font-mono text-center overflow-hidden whitespace-nowrap text-ellipsis text-center"
-          aria-live="polite"
-          aria-atomic="true"
-          aria-label={currentTrackLabel}
-        >
+        <div className="font-mono text-center overflow-hidden whitespace-nowrap text-ellipsis text-center">
           {currentTrack.artist} - {currentTrack.title}
         </div>
       ) : (
-        <div
-          className="font-mono text-center overflow-hidden whitespace-nowrap text-ellipsis text-center"
-          aria-live="polite"
-          aria-atomic="true"
-          aria-label={currentTrackLabel}
-        >
+        <div className="font-mono text-center overflow-hidden whitespace-nowrap text-ellipsis text-center">
           &nbsp;
         </div>
       )}
