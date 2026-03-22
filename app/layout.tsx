@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 import { MoodProvider } from "@/context/MoodContext";
 
 async function getMoodMaps() {
-  const res = await fetch("http://127.0.0.1:8000/api/moods", {
+  const res = await fetch("http://backend:8000/api/moods", {
     cache: "no-store",
   });
 
