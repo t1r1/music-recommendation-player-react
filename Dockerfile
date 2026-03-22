@@ -10,7 +10,6 @@ ADD app /app/app
 ADD context /app/context/
 ADD public /app/public/
 ADD eslint.config.mjs /app/
-ADD next-env.d.ts /app/
 ADD next.config.ts /app/
 ADD postcss.config.mjs /app/
 ADD tailwind.config.ts /app/
