@@ -99,7 +99,7 @@ export default function Track({
       key={id}
       onClick={handleTrackClick}
       data-test-id="track-item"
-      className={`group my-1 cursor-pointer flex items-center round-sm px-1 py-2 dark:hover:bg-amber-50 dark:hover:text-black ${
+      className={`group my-1 cursor-pointer flex items-baseline round-sm px-1 py-2 dark:hover:bg-amber-50 dark:hover:text-black ${
         isActive ? "bg-amber-300 text-black" : "hover:bg-teal-100"
       }`}
       role="listitem"
@@ -146,9 +146,9 @@ export default function Track({
 
       <span
         className="ml-1 text-sm bg-emerald-50 dark:bg-emerald-100 dark:text-gray-800 font-mono px-1 rounded-md rounded-lg"
-        aria-label={`Score: ${relevance}`}
+        aria-label={`Mood relevance: ${relevance}`}
       >
-        score: {relevance}
+        mood score: {relevance}
       </span>
 
       <div
